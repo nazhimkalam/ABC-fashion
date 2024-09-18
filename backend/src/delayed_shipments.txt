@@ -1,0 +1,194 @@
+Delayed Shipments List:
+
+Shipment 1:
+Customer Name: Noah Barnett
+Address: 667 Tubzar Terrace, Sydney, Australia
+Carrier: fastway
+Status: in_transit
+Start Date: 8/31/2024
+Expected Delivery Date: N/A
+
+Shipment 2:
+Customer Name: Caroline Nelson
+Address: 1744 Iveri Way, Perth, Australia
+Carrier: fedex
+Status: failed_delivery
+Start Date: 8/31/2024
+Expected Delivery Date: 9/15/2024
+
+Shipment 3:
+Customer Name: Jayden McGee
+Address: 1657 Rihew Manor, Perth, Australia
+Carrier: australia_post
+Status: failed_delivery
+Start Date: 8/31/2024
+Expected Delivery Date: 9/6/2024
+
+Shipment 4:
+Customer Name: Ruby Fox
+Address: 598 Pucora Loop, Hobart, Australia
+Carrier: fastway
+Status: out_for_delivery
+Start Date: 8/31/2024
+Expected Delivery Date: N/A
+
+Shipment 5:
+Customer Name: Herman Roberson
+Address: 331 Guna Court, Brisbane, Australia
+Carrier: fastway
+Status: in_transit
+Start Date: 8/31/2024
+Expected Delivery Date: N/A
+
+Shipment 6:
+Customer Name: Susan Harris
+Address: 653 Ekore Extension, Perth, Australia
+Carrier: fastway
+Status: in_transit
+Start Date: 8/31/2024
+Expected Delivery Date: N/A
+
+Shipment 7:
+Customer Name: Minnie Clayton
+Address: 785 Bade Boulevard, Brisbane, Australia
+Carrier: australia_post
+Status: failed_delivery
+Start Date: 8/31/2024
+Expected Delivery Date: 9/10/2024
+
+Shipment 8:
+Customer Name: Christopher Holt
+Address: 1408 Etaof Pass, Darwin, Australia
+Carrier: toll
+Status: failed_delivery
+Start Date: 8/31/2024
+Expected Delivery Date: 9/16/2024
+
+Shipment 9:
+Customer Name: Ernest Cohen
+Address: 1974 Bimco Lane, Sydney, Australia
+Carrier: fedex
+Status: in_transit
+Start Date: 8/31/2024
+Expected Delivery Date: N/A
+
+Shipment 10:
+Customer Name: Tony Carr
+Address: 1383 Biskal Center, Melbourne, Australia
+Carrier: couriers_please
+Status: failed_delivery
+Start Date: 8/31/2024
+Expected Delivery Date: 9/10/2024
+
+Shipment 11:
+Customer Name: Garrett Gardner
+Address: 1074 Saik Path, Darwin, Australia
+Carrier: fedex
+Status: out_for_delivery
+Start Date: 8/31/2024
+Expected Delivery Date: N/A
+
+Shipment 12:
+Customer Name: Lucy Brewer
+Address: 1424 Kewo Glen, Brisbane, Australia
+Carrier: fedex
+Status: in_transit
+Start Date: 8/30/2024
+Expected Delivery Date: N/A
+
+Shipment 13:
+Customer Name: Gavin Becker
+Address: 524 Riida Pike, Darwin, Australia
+Carrier: fedex
+Status: failed_delivery
+Start Date: 8/30/2024
+Expected Delivery Date: 9/13/2024
+
+Shipment 14:
+Customer Name: Luella Bates
+Address: 1917 Cuopu Park, Adelaide, Australia
+Carrier: couriers_please
+Status: failed_delivery
+Start Date: 8/30/2024
+Expected Delivery Date: 9/15/2024
+
+Shipment 15:
+Customer Name: Luis Cruz
+Address: 969 Wariv Way, Melbourne, Australia
+Carrier: uber
+Status: failed_delivery
+Start Date: 8/30/2024
+Expected Delivery Date: 9/13/2024
+
+Shipment 16:
+Customer Name: Erik Lopez
+Address: 1576 Edza Place, Brisbane, Australia
+Carrier: fedex
+Status: in_transit
+Start Date: 8/30/2024
+Expected Delivery Date: N/A
+
+Shipment 17:
+Customer Name: Mina Walton
+Address: 1804 Rijaz Terrace, Adelaide, Australia
+Carrier: toll
+Status: failed_delivery
+Start Date: 8/30/2024
+Expected Delivery Date: 9/7/2024
+
+Shipment 18:
+Customer Name: Bruce Ortiz
+Address: 808 Idviw River, Brisbane, Australia
+Carrier: fastway
+Status: in_transit
+Start Date: 8/30/2024
+Expected Delivery Date: N/A
+
+Shipment 19:
+Customer Name: Adeline Long
+Address: 197 Modna Terrace, Adelaide, Australia
+Carrier: fastway
+Status: failed_delivery
+Start Date: 8/30/2024
+Expected Delivery Date: 9/11/2024
+
+Shipment 20:
+Customer Name: Evelyn Blake
+Address: 406 Evrow Loop, Canberra, Australia
+Carrier: dhl
+Status: failed_delivery
+Start Date: 8/30/2024
+Expected Delivery Date: 9/10/2024
+
+Shipment 21:
+Customer Name: Rose Gomez
+Address: 6 Ahga Center, Brisbane, Australia
+Carrier: fastway
+Status: in_transit
+Start Date: 8/29/2024
+Expected Delivery Date: N/A
+
+Shipment 22:
+Customer Name: Christian Johnston
+Address: 1816 Uwurut Terrace, Perth, Australia
+Carrier: dhl
+Status: failed_delivery
+Start Date: 8/29/2024
+Expected Delivery Date: 9/5/2024
+
+Shipment 23:
+Customer Name: Darrell Garrett
+Address: 1822 Wowa Trail, Canberra, Australia
+Carrier: toll
+Status: failed_delivery
+Start Date: 8/29/2024
+Expected Delivery Date: 9/9/2024
+
+Shipment 24:
+Customer Name: Rebecca Garner
+Address: 1319 Bevuj Pass, Sydney, Australia
+Carrier: fedex
+Status: in_transit
+Start Date: 8/29/2024
+Expected Delivery Date: N/A
+

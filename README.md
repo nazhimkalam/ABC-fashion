@@ -1,39 +1,60 @@
-# ABC-fashion
-This repo contains the source code including both the frontend &amp; backend for ABC fashion.
+# Pipelabs Full Stack Challenge Documentation
 
-The frontend is hosted using Netlify & the backend is hosted using Railway
+## Deployment Details
 
-- Frontend: https://abc-fashion-2a3db.web.app
-- Backend: https://abc-fashion-production.up.railway.app
+- **Frontend**: [https://abc-fashion-2a3db.web.app](https://abc-fashion-2a3db.web.app)
+- **Backend**: [https://abc-fashion-production.up.railway.app/delayed-shipments](https://abc-fashion-production.up.railway.app/delayed-shipments)
 
-![image](https://github.com/user-attachments/assets/cf2f80d2-d057-48f4-bc37-52fa965931dd)
+> **Note**: This document provides a brief idea of the solution approach. The solution could be optimized after reviews.
 
-# Solution Outline
+---
 
-## 1. Problem Understanding:
-- ABC Fashion faces delayed or missing shipments and customers become unsatisfied.
+## Solution Outline
+
+### Problem Domain
+- ABC Fashion faces delayed or missing shipments, which results in customer dissatisfaction.
 - They need a system that monitors the shipment status in real-time and alerts them of any delays, allowing them to contact the customer with an update before the customer complains.
 
-## 2. Basic Solution Approach:
-### a. Backend Component (NodeJS):
+---
 
-- Use the /shipments API endpoint provided to retrieve shipment data.
-- Implement logic to filter delayed shipments based on the carrier and status.
-- Use cron jobs or background workers to check for delays (e.g., every hour) regularly.
+## Solution Approach
+
+### Backend Component (NodeJS)
+- Use the `/shipments` API endpoint provided to retrieve shipment data.
+- Implement logic to filter shipments that are delayed based on the carrier and status.
+- Use Cron jobs or background workers to regularly check for delays (e.g., every hour).
 - Log shipments with issues and provide a summary of delays.
+- For delayed shipments, utilize a notification service like **Twilio** or **SendGrid** to notify the customer. This notification can include coupon discounts or any form of gift value, ensuring customer satisfaction.
+- Create an endpoint to export delayed shipments as a text file for backup or record-keeping purposes.
 
-### b. Frontend Component (ReactJS):
-
+### Frontend Component (ReactJS)
 - Create a dashboard that displays shipment statuses.
 - Include filters to view delayed shipments or shipments with issues.
-
 - Basic features:
-    - Summary view: number of delayed, on-time, and delivered shipments.
-    - Search by customer name or tracking number.
-    - Action buttons to trigger customer communication.
+  - Summary view: number of delayed, on-time, and delivered shipments.
+  - Search functionality by customer name or tracking number.
+  - Action buttons to trigger customer communication.
 
-## 3. Future Extensions:
+---
 
-- Add machine learning to predict potential shipment delays based on carrier performance history.
-Implement real-time notifications to alert the admin of new delays.
-Provide customers with a portal where they can track and receive updates on their orders.
+## Implementation Plan
+
+### Backend (Node JS using TypeScript)
+1. Set up a NodeJS Express server to connect to the provided API and retrieve shipment data.
+2. Use **Axios** (or **Fetch**) to call the `/shipments` endpoint and process the paginated data.
+3. Create logic to determine if a shipment is delayed (e.g., by calculating days in transit vs expected delivery).
+4. Send periodic alerts (using tools like **Twilio** for SMS or email services) for delayed shipments.
+
+### Frontend (React JS using TypeScript)
+1. Create a simple dashboard using **React**.
+2. Use **Material UI** or **Bootstrap** for a clean layout.
+3. Display shipment statuses and add filtering options.
+4. Integrate an API call to the backend to fetch updated shipment data.
+5. Handle errors gracefully.
+
+---
+
+## Future Improvements
+- Introduce **machine learning** to predict potential shipment delays based on carrier performance history.
+- Implement **real-time notifications** to the admins regarding new delays.
+- Provide customers with a **portal** where they can track and receive updates on their orders.

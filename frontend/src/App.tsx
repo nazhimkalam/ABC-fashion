@@ -13,6 +13,7 @@ import {
   Box,
   Snackbar,
   Alert,
+  CircularProgress,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { formatShipmentStatus } from "./helper";
@@ -55,29 +56,38 @@ const Dashboard = () => {
   // Define the state using the Shipment type
   const [delayedShipments, setDelayedShipments] = useState<Shipment[]>([]);
   const [error, setError] = useState<string | null>(null); // For error messages
+  const [loading, setLoading] = useState<boolean>(true); // Loading state
   const [openSnackbar, setOpenSnackbar] = useState(false); // Snackbar visibility state
+
+  // const apiUrl = "https://abc-fashion-production.up.railway.app";
+  const apiUrl = "http://localhost:5001";
 
   useEffect(() => {
     // Fetch delayed shipments from the backend
     axios
-      .get<{ delayedShipments: Shipment[] }>(
-        "http://localhost:5001/delayed-shipments"
-      )
-      .then((response) => setDelayedShipments(response.data.delayedShipments))
+      .get<{ delayedShipments: Shipment[] }>(`${apiUrl}/delayed-shipments`)
+      .then((response) => {
+        setDelayedShipments(response.data.delayedShipments);
+        setLoading(false);
+      })
       .catch((error) => {
         console.error("Error fetching delayed shipments:", error);
         setError("Failed to fetch delayed shipments");
         setOpenSnackbar(true);
+        setLoading(false);
       });
   }, []);
 
   // Function to notify an individual customer
   const notifyCustomer = async (customerId: string) => {
     try {
-      await axios.post(`http://localhost:5001/notify-customer/${customerId}`);
+      // API to notify the customer 
+      // await axios.post(`${apiUrl}/notify-customer/${customerId}`);
+
       alert("Notification sent to customer!");
     } catch (error) {
       console.error("Error notifying customer:", error);
+
       setError("Failed to notify customer");
       setOpenSnackbar(true);
     }
@@ -86,10 +96,13 @@ const Dashboard = () => {
   // Function to notify all customers
   const notifyAll = async () => {
     try {
-      await axios.post("http://localhost:5001/notify-all");
+      // API call to notify all customers
+      // await axios.post(`${apiUrl}/notify-all`);
+
       alert("Notifications sent to all customers!");
     } catch (error) {
       console.error("Error notifying all customers:", error);
+
       setError("Failed to notify all customers");
       setOpenSnackbar(true);
     }
@@ -126,45 +139,51 @@ const Dashboard = () => {
         </Button>
       </Box>
 
-      <TableContainer component={Paper}>
-        <Table aria-label="shipment table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>Customer Name</StyledTableCell>
-              <StyledTableCell>Status</StyledTableCell>
-              <StyledTableCell>Carrier</StyledTableCell>
-              <StyledTableCell>Start Date</StyledTableCell>
-              <StyledTableCell>Expected Delivery Date</StyledTableCell>
-              <StyledTableCell>Actions</StyledTableCell>
-            </TableRow>
-          </TableHead>
+      {loading ? (
+        <Box display="flex" justifyContent="center" mt={4}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <TableContainer component={Paper}>
+          <Table aria-label="shipment table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>Customer Name</StyledTableCell>
+                <StyledTableCell>Status</StyledTableCell>
+                <StyledTableCell>Carrier</StyledTableCell>
+                <StyledTableCell>Start Date</StyledTableCell>
+                <StyledTableCell>Expected Delivery Date</StyledTableCell>
+                <StyledTableCell>Actions</StyledTableCell>
+              </TableRow>
+            </TableHead>
 
-          <TableBody>
-            {delayedShipments.map((shipment) => (
-              <StyledTableRow key={shipment.id}>
-                <TableCell>{shipment.customer.name}</TableCell>
-                <TableCell>{formatShipmentStatus(shipment.status)}</TableCell>
-                <TableCell>{shipment.carrier}</TableCell>
-                <TableCell>
-                  {new Date(shipment.start).toLocaleDateString()}
-                </TableCell>
-                <TableCell>
-                  {new Date(shipment.end).toLocaleDateString()}
-                </TableCell>
-                <TableCell>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => notifyCustomer(shipment.id)}
-                  >
-                    Notify
-                  </Button>
-                </TableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            <TableBody>
+              {delayedShipments.map((shipment) => (
+                <StyledTableRow key={shipment.id}>
+                  <TableCell>{shipment.customer.name}</TableCell>
+                  <TableCell>{formatShipmentStatus(shipment.status)}</TableCell>
+                  <TableCell>{shipment.carrier}</TableCell>
+                  <TableCell>
+                    {new Date(shipment.start).toLocaleDateString()}
+                  </TableCell>
+                  <TableCell>
+                    {new Date(shipment.end).toLocaleDateString()}
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => notifyCustomer(shipment.id)}
+                    >
+                      Notify
+                    </Button>
+                  </TableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
 
       <Snackbar
         open={openSnackbar}

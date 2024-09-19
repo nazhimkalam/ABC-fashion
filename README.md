@@ -18,8 +18,8 @@ The frontend is hosted using Netlify & the backend is hosted using Railway
 ### a. Backend Component (NodeJS):
 
 - Use the /shipments API endpoint provided to retrieve shipment data.
-- Implement logic to filter shipments that are delayed based on the carrier and status.
-- Use cron jobs or background workers to regularly check for delays (e.g., every hour).
+- Implement logic to filter delayed shipments based on the carrier and status.
+- Use cron jobs or background workers to check for delays (e.g., every hour) regularly.
 - Log shipments with issues and provide a summary of delays.
 
 ### b. Frontend Component (ReactJS):

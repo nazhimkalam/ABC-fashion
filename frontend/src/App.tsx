@@ -59,8 +59,8 @@ const Dashboard = () => {
   const [loading, setLoading] = useState<boolean>(true); // Loading state
   const [openSnackbar, setOpenSnackbar] = useState(false); // Snackbar visibility state
 
-  // const apiUrl = "https://abc-fashion-production.up.railway.app";
-  const apiUrl = "http://localhost:5001";
+  const apiUrl = "https://abc-fashion-production.up.railway.app";
+  // const apiUrl = "http://localhost:5001";
 
   useEffect(() => {
     // Fetch delayed shipments from the backend

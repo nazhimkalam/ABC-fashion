@@ -74,6 +74,19 @@ async function fetchDelayedShipments(): Promise<Shipment[] | undefined> {
 }
 
 // Schedule a cron job to run every minute
+// Cron Job Schedule: * * * * *
+// *     *     *     *     * 
+// |     |     |     |     | 
+// |     |     |     |     |
+// |     |     |     |     +--- Day of the Week (0 - 6) (0 is Sunday, 6 is Saturday)
+// |     |     |     +--------- Month (1 - 12)
+// |     |     +--------------- Day of the Month (1 - 31)
+// |     +--------------------- Hour (0 - 23)
+// +--------------------------- Minute (0 - 59)
+//
+// In this case: "* * * * *" means the job will run every minute of every hour,
+// of every day, of every month, and every day of the week.
+
 const job = new CronJob("* * * * *", () => {
   console.log("Running cron job to check for delayed shipments...");
 
@@ -96,6 +109,7 @@ job.start();
 // Function to generate a text file of delayed shipments
 const generateDelayedShipmentsFile = (delayedShipments: Shipment[]): string => {
   let fileContent = "Delayed Shipments List:\n\n";
+
   delayedShipments.forEach((shipment, index) => {
     fileContent += `Shipment ${index + 1}:\n`;
     fileContent += `Customer Name: ${shipment.customer.name}\n`;

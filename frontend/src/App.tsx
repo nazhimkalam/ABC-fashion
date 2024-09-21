@@ -14,6 +14,10 @@ import {
   Snackbar,
   Alert,
   CircularProgress,
+  Grid2,
+  Grid,
+  Card,
+  CardContent,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { formatShipmentStatus } from "./helper";
@@ -37,6 +41,12 @@ interface Shipment {
   end: string;
 }
 
+interface DashboardStats {
+  totalInTransit: number;
+  totalFailedDelivery: number;
+  totalOutForDelivery: number;
+}
+
 // Styled components
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   backgroundColor: theme.palette.grey[200],
@@ -55,19 +65,24 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const Dashboard = () => {
   // Define the state using the Shipment type
   const [delayedShipments, setDelayedShipments] = useState<Shipment[]>([]);
+  const [dashboardStats, setDashboardStats] = useState<DashboardStats>();
+
   const [error, setError] = useState<string | null>(null); // For error messages
   const [loading, setLoading] = useState<boolean>(true); // Loading state
   const [openSnackbar, setOpenSnackbar] = useState(false); // Snackbar visibility state
 
   const apiUrl = "https://abc-fashion-production.up.railway.app";
-  // const apiUrl = "http://localhost:5001";
+  // const apiUrl = "http://localhost:5001";/
 
   useEffect(() => {
     // Fetch delayed shipments from the backend
     axios
-      .get<{ delayedShipments: Shipment[] }>(`${apiUrl}/delayed-shipments`)
+      .get<{ delayedShipments: Shipment[]; dashboardStats: DashboardStats }>(
+        `${apiUrl}/delayed-shipments`
+      )
       .then((response) => {
         setDelayedShipments(response.data.delayedShipments);
+        setDashboardStats(response.data.dashboardStats);
         setLoading(false);
       })
       .catch((error) => {
@@ -81,7 +96,7 @@ const Dashboard = () => {
   // Function to notify an individual customer
   const notifyCustomer = async (customerId: string) => {
     try {
-      // API to notify the customer 
+      // API to notify the customer
       // await axios.post(`${apiUrl}/notify-customer/${customerId}`);
 
       alert("Notification sent to customer!");
@@ -121,9 +136,77 @@ const Dashboard = () => {
 
   return (
     <div style={{ padding: 20, margin: 60 }}>
-      <Typography variant="h4" component="h1" gutterBottom>
+      <Typography
+        variant="h4"
+        component="h1"
+        gutterBottom
+        mb={5}
+        textAlign="center"
+      >
         ABC Shipment Dashboard
       </Typography>
+
+      {/* Dashboard Statistics Cards */}
+      {true && (
+        <Grid container spacing={3} mb={4} justifyContent="center">
+          <Grid item xs={12} sm={6} md={3}>
+            <Card
+              sx={{
+                backgroundColor: "#f5f5f5",
+                textAlign: "center",
+                boxShadow: 3,
+              }}
+            >
+              <CardContent>
+                <Typography variant="h6" gutterBottom color="textSecondary">
+                  In Transit
+                </Typography>
+                <Typography variant="h4" color="secondary" fontWeight="bold">
+                  {dashboardStats?.totalInTransit}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <Card
+              sx={{
+                backgroundColor: "#f5f5f5",
+                textAlign: "center",
+                boxShadow: 3,
+              }}
+            >
+              <CardContent>
+                <Typography variant="h6" gutterBottom color="textSecondary">
+                  Failed Delivery
+                </Typography>
+                <Typography variant="h4" color="secondary" fontWeight="bold">
+                  {dashboardStats?.totalFailedDelivery}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <Card
+              sx={{
+                backgroundColor: "#f5f5f5",
+                textAlign: "center",
+                boxShadow: 3,
+              }}
+            >
+              <CardContent>
+                <Typography variant="h6" gutterBottom color="textSecondary">
+                  Out for delivery
+                </Typography>
+                <Typography variant="h4" color="secondary" fontWeight="bold">
+                  {dashboardStats?.totalOutForDelivery}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      )}
 
       <Box
         display="flex"

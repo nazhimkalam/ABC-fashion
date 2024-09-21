@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 5001;
 const API_URL = process.env.API_URL || "";
 const auth = {
   username: process.env.API_USERNAME || "",
-  password: process.env.API_PASSWORD || ""
+  password: process.env.API_PASSWORD || "",
 };
 
 interface Customer {
@@ -36,6 +36,12 @@ interface Shipment {
   end?: string;
 }
 
+interface DashboardStats {
+  totalInTransit: number;
+  totalFailedDelivery: number;
+  totalOutForDelivery: number;
+}
+
 app.use(
   cors({
     origin: "*",
@@ -45,7 +51,7 @@ app.use(
 );
 
 // Function to check if a shipment is delayed based on sample data
-function isDelayed(shipment: Shipment): boolean {
+const isDelayed = (shipment: Shipment): boolean => {
   const startDate = new Date(shipment.start);
   const endDate = shipment.end ? new Date(shipment.end) : new Date();
 
@@ -55,28 +61,66 @@ function isDelayed(shipment: Shipment): boolean {
 
   // Check if the shipment status is not delivered or if it took more than 7 days
   return shipment.status !== "delivered";
-}
+};
+
+const getDashboardStats = async (
+  shipmentList: Shipment[]
+): Promise<DashboardStats> => {
+  let totalInTransit = 0;
+  let totalFailedDelivery = 0;
+  let totalOutForDelivery = 0;
+
+  shipmentList.forEach((shipment) => {
+    switch (shipment.status) {
+      case "in_transit":
+        totalInTransit++;
+        break;
+
+      case "failed_delivery":
+        totalFailedDelivery++;
+        break;
+
+      case "out_for_delivery":
+        totalOutForDelivery++;
+        break;
+
+      default:
+        break;
+    }
+  });
+
+  return {
+    totalInTransit,
+    totalFailedDelivery,
+    totalOutForDelivery,
+  } as DashboardStats;
+};
 
 // Function to fetch delayed shipments
-async function fetchDelayedShipments(): Promise<Shipment[] | undefined> {
+const fetchDelayedShipments = async (): Promise<
+  { delayedShipments: Shipment[]; dashboardStats: DashboardStats } | undefined
+> => {
   try {
     const response = await axios.get(API_URL, { auth });
     const shipments: Shipment[] = response.data.data;
 
-    const delayedShipments = shipments.filter(isDelayed);
-    return delayedShipments;
+    const delayedShipments: Shipment[] = shipments.filter(isDelayed);
+    const dashboardStats: DashboardStats = await getDashboardStats(
+      delayedShipments
+    );
 
+    return { delayedShipments, dashboardStats };
   } catch (error) {
     console.error("Error fetching shipments:", error);
 
-    return [];
+    return undefined;
   }
-}
+};
 
 // Schedule a cron job to run every minute
 // Cron Job Schedule: * * * * *
-// *     *     *     *     * 
-// |     |     |     |     | 
+// *     *     *     *     *
+// |     |     |     |     |
 // |     |     |     |     |
 // |     |     |     |     +--- Day of the Week (0 - 6) (0 is Sunday, 6 is Saturday)
 // |     |     |     +--------- Month (1 - 12)
@@ -90,9 +134,9 @@ async function fetchDelayedShipments(): Promise<Shipment[] | undefined> {
 const job = new CronJob("* * * * *", () => {
   console.log("Running cron job to check for delayed shipments...");
 
-  fetchDelayedShipments().then((delayedShipments) => {
-    if (delayedShipments && delayedShipments.length > 0) {
-      console.log("Delayed Shipments:", delayedShipments);
+  fetchDelayedShipments().then((response) => {
+    if (response && response.delayedShipments.length > 0) {
+      console.log("Delayed Shipments:", response.delayedShipments);
       // Here, send email or SMS alerts to notify customers or admin
       // e.g., using Twilio, SendGrid, or another notification service
 
@@ -101,7 +145,7 @@ const job = new CronJob("* * * * *", () => {
     } else {
       console.log("No delayed shipments at this time.");
     }
-  });;
+  });
 });
 
 job.start();
@@ -134,9 +178,9 @@ const generateDelayedShipmentsFile = (delayedShipments: Shipment[]): string => {
 // API endpoint to manually trigger shipment fetching (for testing purposes)
 app.get("/delayed-shipments", async (req: Request, res: Response) => {
   try {
-    const delayedShipments = await fetchDelayedShipments();
+    const response = await fetchDelayedShipments();
 
-    res.json({ delayedShipments });
+    res.json(response);
   } catch (error) {
     console.error("Error fetching shipments:", error);
 
@@ -148,7 +192,9 @@ app.get("/delayed-shipments", async (req: Request, res: Response) => {
 app.get("/download-delayed-shipments", async (req: Request, res: Response) => {
   try {
     const delayedShipments: Shipment[] | undefined =
-      await fetchDelayedShipments();
+      await fetchDelayedShipments().then(
+        (response) => response?.delayedShipments
+      );
 
     if (delayedShipments && delayedShipments.length > 0) {
       const filePath = generateDelayedShipmentsFile(delayedShipments);

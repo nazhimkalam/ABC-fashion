@@ -1,5 +1,8 @@
 # Pipelabs Full Stack Challenge Documentation
 
+![Uploading image.png…]()
+
+
 ## Deployment Details
 
 - **Frontend**: [https://abc-fashion-k2c7.vercel.app/](https://abc-fashion-k2c7.vercel.app/)

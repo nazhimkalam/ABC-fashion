@@ -1,9 +1,6 @@
 ![image](https://github.com/user-attachments/assets/3ba8fa22-4a94-4598-bda1-862b2b72b3f5)
 # Pipelabs Full Stack Challenge Documentation
 
-![Uploading screencapture-abc-fashion-k2c7-vercel-app-2024-09-22-10_41_39.png…]()
-
-
 ## Deployment Details
 
 - **Frontend**: [https://abc-fashion-k2c7.vercel.app/](https://abc-fashion-k2c7.vercel.app/)

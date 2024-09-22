@@ -2,7 +2,7 @@
 
 ## Deployment Details
 
-- **Frontend**: [https://abc-fashion-2a3db.web.app](https://abc-fashion-2a3db.web.app)
+- **Frontend**: [https://abc-fashion-k2c7.vercel.app/](https://abc-fashion-k2c7.vercel.app/)
 - **Backend**: [https://abc-fashion-production.up.railway.app/delayed-shipments](https://abc-fashion-production.up.railway.app/delayed-shipments)
 
 > **Note**: This document provides a brief idea of the solution approach. The solution could be optimized after reviews.
